@@ -1,0 +1,1 @@
+This is the folder that I use for my personal projects during my time in COSC-1P03 (2025). good luck have fun.

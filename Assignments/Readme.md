@@ -1,0 +1,1 @@
+This is the folder for 2025 COSC-1P03 Assignments. These projects are correct and are fully commented for easy reading. have fun.

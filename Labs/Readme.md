@@ -1,0 +1,1 @@
+This is the folder for 2025 COSC-1P03 Labs, These are fully working and correct however are not commented, good luck. have fun.
