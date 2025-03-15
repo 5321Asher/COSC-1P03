@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethereal Arrows</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      max-width: 100%;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background-color: #5a5a5a;
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .location-container {
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
+      padding-left: 10px;
+      justify-content: space-between;
+    }
+
+    .header p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .location-icon {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+
+    .section-title-container {
+      max-width: 600px;
+      margin: 0 auto 20px;
+      padding: 0 16px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+
+    .team-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 16px;
+      max-width: 600px;
+      margin: 0 auto;
+      flex: 1;
+    }
+
+    .team-card {
+      background-color: #ffffff;
+      border-radius: 6px;
+      overflow: hidden;
+      width: 200%;
+      height: auto;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      position: relative;
+    }
+
+    .team-card:active {
+      transform: scale(0.98);
+    }
+
+    .team-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 25%; /* Color quarter from the right */
+      z-index: 0;
+    }
+
+    .team-card-1::after {
+      background-color: #e53935; /* Red */
+    }
+
+    .team-card-2::after {
+      background-color: #1e88e5; /* Blue */
+    }
+
+    .team-card-3::after {
+      background-color: #ff9800; /* Orange */
+    }
+
+    .team-card-4::after {
+      background-color: #43a047; /* Green */
+    }
+
+    .team-info {
+      padding: 14px 18px; /* Slightly reduced vertical padding */
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .team-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #fff;
+      margin-right: 15px;
+      object-fit: cover;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      z-index: 2;
+    }
+
+    .team-text {
+      flex: 1;
+    }
+
+    .rep-name {
+      font-size: 16px; /* Slightly smaller font */
+      font-weight: 600;
+      margin: 0 0 2px 0; /* Reduced margin */
+      color: #333;
+    }
+
+    .team-name {
+      font-size: 12px; /* Slightly smaller font */
+      margin: 0;
+      color: #666;
+    }
+
+    .footer {
+      padding: 20px 16px;
+      margin-top: 20px;
+      background-color: #f0f2f5;
+      border-radius: 20px 20px 0 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .footer-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .upcoming-events {
+      display: flex;
+      overflow-x: auto;
+      gap: 12px;
+      padding-bottom: 10px;
+      scrollbar-width: none;
+    }
+
+    .upcoming-events::-webkit-scrollbar {
+      display: none;
+    }
+
+    .event-card {
+      min-width: 160px;
+      background-color: white;
+      padding: 12px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-date {
+      font-size: 12px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .event-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 4px 0;
+    }
+
+    .event-location {
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <h1>Ethereal Arrows</h1>
+  <div class="location-container">
+    <p>You are currently looking at teams in this area<b>L4L1H2</b></p>
+    <svg class="location-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="white"/>
+    </svg>
+  </div>
+</header>
+
+<div class="section-title-container">
+  <h2 class="section-title">Candidates</h2>
+</div>
+
+<div class="team-container">
+  <a href="team1.html" class="team-card team-card-1">
+    <div class="team-info">
+      <img src="/api/placeholder/50/50" alt="Sarah Johnson" class="team-image">
+      <div class="team-text">
+        <h2 class="rep-name">Sarah Johnson</h2>
+        <p class="team-name">Emerald Strikers</p>
+      </div>
+    </div>
+  </a>
+
+  <a href="team2.html" class="team-card team-card-2">
+    <div class="team-info">
+      <img src="/api/placeholder/50/50" alt="Michael Chen" class="team-image">
+      <div class="team-text">
+        <h2 class="rep-name">Michael Chen</h2>
+        <p class="team-name">Azure Defenders</p>
+      </div>
+    </div>
+  </a>
+
+  <a href="team3.html" class="team-card team-card-3">
+    <div class="team-info">
+      <img src="/api/placeholder/50/50" alt="Leila Patel" class="team-image">
+      <div class="team-text">
+        <h2 class="rep-name">Leila Patel</h2>
+        <p class="team-name">Golden Archers</p>
+      </div>
+    </div>
+  </a>
+
+  <a href="team4.html" class="team-card team-card-4">
+    <div class="team-info">
+      <img src="/api/placeholder/50/50" alt="Marcus Williams" class="team-image">
+      <div class="team-text">
+        <h2 class="rep-name">Marcus Williams</h2>
+        <p class="team-name">Violet Vanguards</p>
+      </div>
+    </div>
+  </a>
+</div>
+
+<div class="footer">
+  <div class="footer-title">Upcoming Events</div>
+  <div class="upcoming-events">
+    <div class="event-card">
+      <div class="event-date">Mar 18, 2025</div>
+      <div class="event-name">Quarterfinal Match</div>
+      <div class="event-location">Central Arena</div>
+    </div>
+    <div class="event-card">
+      <div class="event-date">Mar 25, 2025</div>
+      <div class="event-name">Semifinal Match</div>
+      <div class="event-location">East Stadium</div>
+    </div>
+    <div class="event-card">
+      <div class="event-date">Apr 02, 2025</div>
+      <div class="event-name">Championship</div>
+      <div class="event-location">Victory Field</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

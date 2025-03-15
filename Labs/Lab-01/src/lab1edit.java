@@ -15,8 +15,8 @@ public class lab1edit {
         int[][] O = new int[A.length][A[1].length];
         fill(A);
         fillO(O);
-
         apply(A, B, O);
+        
 
     }
 
