@@ -72,7 +72,7 @@ public class testStringT {
         int index = scanner.nextInt(); //takes before index
         
         StringT result = S.Before(index);
-        char[] expected = new char[index];
+        char[] expected = new char[index + 1];
         
         for (int i = 0; i < index; i++) { //manual array testing
             expected[i] = S.CharAt(i);
@@ -380,6 +380,7 @@ public class testStringT {
             System.out.println("10. StartsWith");
             System.out.println("11. Iterator");
             System.out.println("12. Test Suite (ALL TESTS)");
+            System.out.println("13.  exit");
             
             Scanner scann2 = new Scanner(System.in);
             int choice = scann2.nextInt(); //takes test choice
@@ -459,6 +460,9 @@ public class testStringT {
                     tester.testIteratorNext(testString);
                     System.out.println(" ");
                     break;
+                    
+                case 13:
+                    return;
                 
                 default:
                     System.out.println("invalid choice, try again");

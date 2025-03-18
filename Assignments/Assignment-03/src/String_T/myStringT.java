@@ -78,7 +78,7 @@ public class myStringT implements StringT, Iterable<Character> {
     
     /**
      * Returns a new StringT containing the characters from the start of this StringT
-     * up to, but not including, the specified index.
+     * up to and including, the specified index.
      *
      * @param i the index up to which characters are included in the resulting StringT.
      *          Must be non-negative and less than the length of this StringT.
@@ -89,12 +89,12 @@ public class myStringT implements StringT, Iterable<Character> {
      */
     @Override
     public StringT Before(int i) {
-        if (i < 0 || i >= chars.length) {
+        if (i + 1  < 0 || i + 1 >= chars.length) {
             throw new stringTException("Index out of bounds");
         }
         
-        char[] newChars = new char[i];
-        for (int j = 0; j < i; j++) { //from start of StringT to i
+        char[] newChars = new char[i + 1];
+        for (int j = 0; j <= i; j++) { //from start of StringT to i
             newChars[j] = chars[j];
         }
         
