@@ -1,6 +1,5 @@
 package String_T; //defines package
 
-
 /**
  * The stringTException class is a custom unchecked exception that extends the RuntimeException.
  * This exception is used to handle error scenarios specific to the operations in the custom string class 'myStringT'.

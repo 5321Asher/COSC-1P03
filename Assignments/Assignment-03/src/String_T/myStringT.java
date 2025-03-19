@@ -3,26 +3,15 @@ package String_T; //defines package
 import java.util.Iterator; // imports the iterator to iterate over characters
 
 /**
- * Represents an immutable string-like object that provides various operations
- * for string manipulation, such as concatenation, substring extraction, length determination,
- * character access, and character replacement. The string is internally represented by a character array
- * and ensures immutability by creating defensive copies during operations.
- *
- * This class implements the {@code StringT} interface and provides functionality to work
+ * represents a String like data type with multiple functions such as concatenation, prefix checking,
+ * and char replacement. This class implements the {@code StringT} interface and provides functionality to work
  * with string data in an immutable way while adhering to the contract of the methods defined in the interface.
- * It also supports iteration over its characters by implementing the {@code Iterable<Character>} interface.
  *
  * Asher Virgona
  * 8032492
  */
-
-/**
- * Represents an immutable string with various methods to manipulate and retrieve
- * information about the string. This implementation ensures immutability by storing
- * the string as a character array and providing operations that return new instances
- * of the class.
- */
 public class myStringT implements StringT, Iterable<Character> {
+    
     private final char[] chars; // stores the chars of the input string in an immutable array
     
     /**
@@ -72,7 +61,6 @@ public class myStringT implements StringT, Iterable<Character> {
         for (int i = 0; i < S.Length(); i++) { //copy of second StringT
             newChars[i + chars.length] = otherChars[i];
         }
-        
         return new myStringT(newChars);
     }
     
@@ -89,7 +77,7 @@ public class myStringT implements StringT, Iterable<Character> {
      */
     @Override
     public StringT Before(int i) {
-        if (i + 1  < 0 || i + 1 >= chars.length) {
+        if (i + 1  < 0 || i + 1 > chars.length) {
             throw new stringTException("Index out of bounds");
         }
         
@@ -97,7 +85,6 @@ public class myStringT implements StringT, Iterable<Character> {
         for (int j = 0; j <= i; j++) { //from start of StringT to i
             newChars[j] = chars[j];
         }
-        
         return new myStringT(newChars);
     }
     
@@ -121,7 +108,6 @@ public class myStringT implements StringT, Iterable<Character> {
         for (int j = i, k = 0; j < chars.length; j++, k++) { //from i to end of StringT
             newChars[k] = chars[j];
         }
-        
         return new myStringT(newChars);
     }
     
@@ -146,7 +132,6 @@ public class myStringT implements StringT, Iterable<Character> {
         for (int i = 0; i < this.chars.length; i++) {
             clonedChars[i] = this.chars[i];
         }
-        
         return new myStringT(clonedChars);
     }
     
@@ -163,7 +148,6 @@ public class myStringT implements StringT, Iterable<Character> {
         if (i < 0 || i >= chars.length) {
             throw new stringTException("index out of bounds");
         }
-        
         return chars[i];
     }
     
@@ -180,7 +164,6 @@ public class myStringT implements StringT, Iterable<Character> {
         for (int i = 0; i < chars.length; i++) {
             copy[i] = chars[i];
         }
-        
         return copy;
     }
     
@@ -203,7 +186,6 @@ public class myStringT implements StringT, Iterable<Character> {
         for (int k = i; k < j; k++) { // chars between the indices
             newChars[k - i] = chars[k];
         }
-        
         return new myStringT(newChars);
     }
     

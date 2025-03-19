@@ -1,22 +1,19 @@
 package test; //defines package
 
+//import StringT ADT classes
 import String_T.StringT;
 import String_T.myStringT;
 import String_T.stringTException;
 import String_T.stringTIterator;
 
-import java.util.Scanner;
+import java.util.Scanner; //for test input
 
 /**
  * The {@code testStringT} class provides methods to test operations
  * on the {@code StringT} Abstract Data Type (ADT). It includes a
  * variety of operations to validate the functionality of the
  * underlying implementation of {@code StringT}.
- * <p>
- * The class assumes interaction with the user through the console
- * for some test cases and makes use of the {@code Scanner} class
- * for input reading.
- * <p>
+ *
  * Asher Virgona
  * 8032492
  */
@@ -35,9 +32,10 @@ public class testStringT {
         String secondInput = scanner.nextLine(); //takes second string
         StringT String2 = new myStringT(secondInput.toCharArray());
         
-        StringT result = S.ConCat(String2);
-        char[] expected = new char[S.Length() + String2.Length()];
+        StringT result = S.ConCat(String2); //StringT copy
         
+        //manual copy
+        char[] expected = new char[S.Length() + String2.Length()];
         for (int i = 0; i < S.Length(); i++) { //copies first string
             expected[i] = S.CharAt(i);
         }
@@ -71,10 +69,11 @@ public class testStringT {
         System.out.println("Enter an index for Before test: ");
         int index = scanner.nextInt(); //takes before index
         
-        StringT result = S.Before(index);
-        char[] expected = new char[index + 1];
+        StringT result = S.Before(index); //StringT copy
         
-        for (int i = 0; i < index; i++) { //manual array testing
+        //manual copy
+        char[] expected = new char[index + 1];
+        for (int i = 0; i <= index; i++) {
             expected[i] = S.CharAt(i);
         }
         
@@ -103,10 +102,11 @@ public class testStringT {
         System.out.println("Enter an index for After test: ");
         int index = scanner.nextInt(); //takes after index
         
-        StringT result = S.After(index);
-        char[] expected = new char[S.Length() - index];
+        StringT result = S.After(index); //StringT copy
         
-        for (int i = index, j = 0; i < S.Length(); i++, j++) { //manual array testing
+        //manual copy
+        char[] expected = new char[S.Length() - index];
+        for (int i = index, j = 0; i < S.Length(); i++, j++) {
             expected[j] = S.CharAt(i);
         }
         
@@ -131,7 +131,7 @@ public class testStringT {
      * @param S The StringT object on which the Length method will be tested.
      */
     public void testLength(StringT S) {
-        int result = S.Length();
+        int result = S.Length(); //StringT copy
         System.out.println("String length: " + result); //test result
         System.out.println("testLength: " + (result == S.ToArray().length ? "Passed" : "Failed"));
     }
@@ -145,7 +145,7 @@ public class testStringT {
      * @param S The StringT object on which the Clone method will be tested.
      */
     public void testClone(StringT S) {
-        StringT result = S.Clone();
+        StringT result = S.Clone(); //StringT copy
         System.out.println(result.ToArray()); //test result
         System.out.println("testClone: " + (S != result && new String(S.ToArray()).equals(new String(result.ToArray())) ? "Passed" : "Failed"));
     }
@@ -160,14 +160,14 @@ public class testStringT {
      */
     public void testCharAt(StringT S) {
         Scanner scann = new Scanner(System.in);
-        System.out.println("enter an index to test");
+        System.out.println("enter an index to test charAt method");
         int i = scann.nextInt(); //takes char input
         
         try { //tries to compare StringT method vs S.ToArray()[i]
-            char result = S.CharAt(i);
+            char result = S.CharAt(i); //StringT copy
             System.out.println(result);
             System.out.println("testCharAt: " + (result == S.ToArray()[i] ? "Passed" : "Failed"));
-        } catch (stringTException e) { //chathes exception in charAt method
+        } catch (stringTException e) { //catches exception in charAt method
             System.out.println("testCharAt: Failed with exception: " + e.getMessage());
         }
     }
@@ -180,10 +180,11 @@ public class testStringT {
      * @param S The StringT object on which the ToArray method will be tested.
      */
     public void testToArray(StringT S) {
-        char[] original = S.ToArray(); //StringT char array
-        char[] expected = new char[S.Length()]; //manual array test array
+        char[] original = S.ToArray(); //StringT copy
+        char[] expected = new char[S.Length()]; //manual copy initialization
         
-        for (int i = 0; i < S.Length(); i++) { //fills manual test
+        //fills manual copy
+        for (int i = 0; i < S.Length(); i++) {
             expected[i] = S.CharAt(i);
         }
         
@@ -209,13 +210,13 @@ public class testStringT {
      */
     public void testSubString(StringT S) {
         Scanner scann = new Scanner(System.in);
-        System.out.println("enter an index to start at");
+        System.out.println("enter an index to start substring at");
         int i = scann.nextInt(); //takes start index
-        System.out.println("enter another index to end at");
+        System.out.println("enter another index to end substring at");
         int j = scann.nextInt(); //takes end index
         
         try { //tries StringT method vs manual test (String offset)
-            StringT result = S.SubString(i, j);
+            StringT result = S.SubString(i, j); //StringT copy
             System.out.println(result.ToArray());
             System.out.println("testSubString: " + (new String(result.ToArray()).equals(new String(S.ToArray(), i, j - i)) ? "Passed" : "Failed"));
         } catch (stringTException e) { //catches exception from StringT method
@@ -238,9 +239,11 @@ public class testStringT {
         char c = scann.next().charAt(0); //target char
         System.out.println("enter a character to replace with");
         char r = scann.next().charAt(0); //replacement char
-        StringT result = S.replaceChar(c, r);
         
-        char[] expected = new char[S.Length()]; //manual array test
+        StringT result = S.replaceChar(c, r); //StringT copy
+        
+        //manual copy
+        char[] expected = new char[S.Length()];
         for (int i = 0; i < S.Length(); i++) {
             if (S.CharAt(i) == c) {
                 expected[i] = r;
@@ -249,7 +252,7 @@ public class testStringT {
             }
         }
         
-        // comapre StringT method vs manual array test
+        // compare StringT copy vs manual copy
         boolean match = true;
         for (int i = 0; i < expected.length; i++) {
             if (expected[i] != result.CharAt(i)) {
@@ -274,10 +277,10 @@ public class testStringT {
         System.out.println("enter a prefix to test the String");
         StringT prefix = new myStringT(scann.nextLine().toCharArray());
         
-        boolean result = S.startsWith(prefix); //StringT method
-        boolean manualResult = false;
+        boolean result = S.startsWith(prefix); //StringT test
         
-        //manual method
+        //manual test
+        boolean manualResult = false;
         int count = 0;
         for (int i = 0; i < prefix.Length(); i++) {
             if (S.CharAt(i) != prefix.CharAt(i)) {
@@ -286,6 +289,7 @@ public class testStringT {
             }
             count++;
         }
+        
         if (count == prefix.Length()) { //true check
             manualResult = true;
         }
@@ -293,7 +297,6 @@ public class testStringT {
             manualResult = false;
             result = false;
         }
-        
         System.out.println("ADT result: " + result); //StringT result
         System.out.println("Manual Result: " + manualResult); //manual result
         System.out.println("testStartsWith: " + (result ? "Passed" : "Failed")); //test result
@@ -312,6 +315,7 @@ public class testStringT {
         int index = 0;
         boolean match = true;
         
+        //match check
         for (char c : S.ToArray()) {
             if (c != expected[index]) {
                 match = false;
@@ -336,6 +340,7 @@ public class testStringT {
         int index = 0;
         boolean match = true;
         
+        //match check
         while (iterator.hasNext()) {
             if (iterator.next() != expected[index]) {
                 match = false;
