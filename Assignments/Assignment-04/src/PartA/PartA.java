@@ -1,14 +1,14 @@
-package MazeAndSolver;
+package PartA;
 
 import Media.Turtle;
 import Media.TurtleDisplayer;
 import java.awt.*;
 
-public class MazeGeneratorWorking {
+public class PartA {
     private final boolean[][] visited = new boolean[30][30];
     private final Turtle pen;
     
-    public MazeGeneratorWorking() {
+    public PartA() {
         pen = new Turtle(0);
         TurtleDisplayer canvas = new TurtleDisplayer(pen, 300, 300);
         setupCanvas();
@@ -77,6 +77,6 @@ public class MazeGeneratorWorking {
     }
     
     public static void main(String[] args) {
-        new MazeGenerator();
+        new PartA();
     }
 }
