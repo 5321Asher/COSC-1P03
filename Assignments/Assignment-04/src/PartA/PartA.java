@@ -1,80 +1,125 @@
 package PartA;
 
-import Media.Turtle;
-import Media.TurtleDisplayer;
-import java.awt.*;
+import Media.*;
 
 public class PartA {
-    private final boolean[][] visited = new boolean[30][30];
-    private final Turtle pen;
+    
+    Turtle pen = new Turtle(0);
+    TurtleDisplayer display = new TurtleDisplayer(pen, 400, 400);
     
     public PartA() {
-        pen = new Turtle(0);
-        TurtleDisplayer canvas = new TurtleDisplayer(pen, 300, 300);
-        setupCanvas();
-        int startX = (int) (Math.random() * 30);
-        int startY = (int) (Math.random() * 30);
-        canvas.waitForUser();
-        generateMaze(startX, startY);
-    }
-    
-    private void setupCanvas() {
-        pen.setPenWidth(400);
         pen.penDown();
-        pen.moveTo(- 100, 100);
-        pen.moveTo(100, 100);
-        pen.moveTo(100, - 100);
-        pen.moveTo(- 100, - 100);
-        pen.moveTo(- 100, 100);
-        pen.penUp();
-        pen.setPenWidth(5);
-        pen.setPenColor(Color.WHITE);
-    }
-    
-    private void travel(int x, int y) {
-        pen.moveTo(x * 10 - 145, y * 10 - 145);
-    }
-    
-    private char[] randomDirections() {
-        char[] directions = {'N', 'S', 'E', 'W'};
-        for (int i = 0; i < 4; i++) {
-            int swapIdx = (int) (Math.random() * 4);
-            char temp = directions[i];
-            directions[i] = directions[swapIdx];
-            directions[swapIdx] = temp;
+        display.waitForUser();
+        for (int i = 0; i < 7; i++) {
+            branch(10, 75);
+            pen.left(2 * Math.PI / 7);
         }
-        return directions;
+        
+        display.close();
     }
     
-    private void generateMaze(int x, int y) {
-        if (x < 0 || x >= 30 || y < 0 || y >= 30 || visited[x][y]) {
+    private void branch(int order, int len) {
+        if (order <= 0) {
             return;
         }
         
-        visited[x][y] = true;
-        
-        travel(x, y);
-        pen.penDown();
-        
-        char[] directions = randomDirections();
-        for (char dir : directions) {
-            switch (dir) {
-                case 'N':
-                    generateMaze(x, y - 1);
-                    break;
-                case 'S':
-                    generateMaze(x, y + 1);
-                    break;
-                case 'E':
-                    generateMaze(x + 1, y);
-                    break;
-                case 'W':
-                    generateMaze(x - 1, y);
-                    break;
-            }
-            travel(x, y);
+        if (order == 10) {
+            // Special pattern for main branches
+            pen.forward(len);
+            
+            // Create branches at the end
+            pen.right(Math.PI / 6);
+            branch(order - 1, len / 2);
+            branch(order - 1, len / 4);
+            
+            pen.left(Math.PI / 6);
+            
+            pen.left(Math.PI / 6);
+            branch(order - 1, len / 2);
+            branch(order - 1, len / 4);
+            
+            pen.right(Math.PI / 6);
+            
+            
+            pen.backward(len / 3);  // Go back to middle
+            
+            pen.right(Math.PI / 6);
+            branch(order - 1, len / 2);
+            branch(order - 1, len / 4);
+            pen.left(Math.PI / 6);
+            
+            pen.left(Math.PI / 6);
+            branch(order - 1, len / 2);
+            
+            branch(order - 1, len / 4);
+            pen.right(Math.PI / 6);
+            
+            pen.backward(len / 3);
+            
+            // Create additional inner branches
+              // Go back to middle
+            
+            
+            pen.right(Math.PI / 6);
+            branch(order - 1, len / 2);
+            branch(order - 1, len / 4);
+            pen.left(Math.PI / 6);
+            
+            pen.left(Math.PI / 6);
+            branch(order - 1, len / 2);
+            
+            branch(order - 1, len / 4);
+            pen.right(Math.PI / 6);
+            
+            pen.backward(len / 3);  // Go all the way back
+            
+            pen.forward(len / 3 + len);
+            pen.right(Math.PI / 6);
+            branch(order - 1, len / 2);
+            branch(order - 1, len / 4);
+            pen.left(Math.PI / 6);
+            
+            pen.left(Math.PI / 6);
+            branch(order - 1, len / 2);
+            
+            branch(order - 1, len / 4);
+            pen.right(Math.PI / 6);
+            
+            pen.backward(len / 3 + len);
+            
+            pen.forward(2*(len / 3) + len);
+            pen.right(Math.PI / 6);
+            
+            branch(order - 1, len / 5);
+            pen.left(Math.PI / 6);
+            
+            pen.left(Math.PI / 6);
+            
+            
+            branch(order - 1, len / 5);
+            pen.right(Math.PI / 6);
+            
+            pen.backward(2*(len / 3) + len);
+        } else {
+            // Regular pattern for smaller branches
+            pen.forward(len);
+            
+            pen.right(Math.PI / 6);
+            branch(order - 1, len / 2);
+            branch(order - 1, len / 4);
+            
+            pen.left(Math.PI / 6);
+            
+            pen.left(Math.PI / 6);
+            branch(order - 1, len / 2);
+            branch(order - 1, len / 4);
+            
+            pen.right(Math.PI / 6);
+            
+            pen.backward(len);
         }
     }
+    
     
     public static void main(String[] args) {
         new PartA();

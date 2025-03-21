@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Assignments/Assignment-01/Assignment-01.iml" filepath="$PROJECT_DIR$/Assignments/Assignment-01/Assignment-01.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Assignments/Assignment-02/Assignment-02.iml" filepath="$PROJECT_DIR$/Assignments/Assignment-02/Assignment-02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Assignments/Assignment-03/Assignment-03.iml" filepath="$PROJECT_DIR$/Assignments/Assignment-03/Assignment-03.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Assignments/Assignment-04/Assignment-04.iml" filepath="$PROJECT_DIR$/Assignments/Assignment-04/Assignment-04.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/COSC-1P03.iml" filepath="$PROJECT_DIR$/.idea/COSC-1P03.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Labs/Lab-01/Lab-01.iml" filepath="$PROJECT_DIR$/Labs/Lab-01/Lab-01.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Labs/Lab-02/Lab-02.iml" filepath="$PROJECT_DIR$/Labs/Lab-02/Lab-02.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Labs/Lab-03/Lab-03.iml" filepath="$PROJECT_DIR$/Labs/Lab-03/Lab-03.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Labs/Lab-04/Lab-04.iml" filepath="$PROJECT_DIR$/Labs/Lab-04/Lab-04.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Labs/Lab-05/Lab-05.iml" filepath="$PROJECT_DIR$/Labs/Lab-05/Lab-05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Labs/Lab-06/Lab-06.iml" filepath="$PROJECT_DIR$/Labs/Lab-06/Lab-06.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Labs/Lab-07/Lab-07.iml" filepath="$PROJECT_DIR$/Labs/Lab-07/Lab-07.iml" />
+    </modules>
+  </component>
+</project>
