@@ -1,6 +1,6 @@
 package codebook;
 
-public class node {
+public  class node {
     int data;
     node next;
     
