@@ -1,33 +1,16 @@
 package minor;
 
-public class flower {
-    private String name;
-    private String desc;
-    private int inv;
+public interface flower {
     
-    public flower(String name, String desc, int inv){
-        this.name = name;
-        this.desc = desc;
-        this.inv = inv;
-    }
-    public String getName(){
-        return name;
-    }
-    public String getDesc(){
-        return desc;
-    }
-    public int getInv(){
-        return inv;
-    }
+    public String getName();
     
-    public void setInv(int inv){
-        this.inv = inv;
-    }
+    public void setName(String name);
     
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+    public String getDescription();
+    
+    public void setDescription(String description);
+    
+    public int getInv();
+    
+    public void setInv(int inv);
 }

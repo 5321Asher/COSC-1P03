@@ -34,7 +34,7 @@ public class RoloDlist implements Rolodex {
         
         //System.out.println(c.last + " " + ptr.c.getLast());
         
-        while (c.last.compareToIgnoreCase(ptr.c.getLast()) > 0) {
+        while (ptr.next != null) {
             ptr = ptr.next;
         }
         //System.out.println(c.last + " " + ptr.c.getLast());
@@ -72,8 +72,11 @@ public class RoloDlist implements Rolodex {
             tail = prevNode;
         }
         
-        current = nextNode != null ? nextNode : prevNode;
-    
+        if (nextNode != null)
+            current = nextNode;
+        else
+            current = prevNode;
+        
     }
     
     public Contact Up() {//Returns the next contact in the structure

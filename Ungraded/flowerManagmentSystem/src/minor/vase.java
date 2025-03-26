@@ -1,33 +1,15 @@
 package minor;
 
-public class vase {
-    private String name;
-    private String desc;
-    private int inv;
+public interface vase {
+    public String getName();
     
-    public vase(String name, String desc, int inv){
-        this.name = name;
-        this.desc = desc;
-        this.inv = inv;
-    }
-    public String getName(){
-        return name;
-    }
-    public String getDesc(){
-        return desc;
-    }
-    public int getInv(){
-        return inv;
-    }
+    public void setName(String name);
     
-    public void setInv(int inv){
-        this.inv = inv;
-    }
+    public String getDescription();
     
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+    public void setDescription(String description);
+    
+    public int getInv();
+    
+    public void setInv(int inv);
 }
