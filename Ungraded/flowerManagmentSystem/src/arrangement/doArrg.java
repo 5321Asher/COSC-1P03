@@ -1,17 +1,19 @@
 package arrangement;
 
 import BasicIO.ASCIIDataFile;
+import BasicIO.ASCIIOutputFile;
 import BasicIO.BasicForm;
 import minor.myItem;
 
 public class doArrg {
     
     BasicForm form;
+    BasicForm addForm;
     String arrgName;
     double arrgPrice;
     
     public void formSetup() {
-        form = new BasicForm("Up", "Down", "Add", "Delete", "List", "Find", "Exit");
+        form = new BasicForm("Up", "Down", "Add", "Delete", "Edit", "List", "Find", "Exit");
         
         form.addTextField("arrgName", "Arrangement", 20);
         form.addTextField("name", "Name   ", 20);
@@ -27,6 +29,16 @@ public class doArrg {
         form.setEditable("qty", false);
         form.setEditable("inv", false);
         form.setEditable("type", false);
+        
+        ////////////////////////////////////////////
+        
+        addForm = new BasicForm("Ok", "Cancel");
+        
+        addForm.addTextField("name", "Name   ", 20);
+        addForm.addTextField("desc", "Description      ", 20);
+        addForm.addTextField("qty", "Quantity", 10);
+        addForm.addTextField("inv", "Inventory", 10);
+        addForm.addTextField("type", "Type    ", 20);
     }
     
     public void loadItems(ASCIIDataFile in, myArrangement r) {
@@ -36,15 +48,27 @@ public class doArrg {
         arrgName = in.readString();
         arrgPrice = in.readDouble();
         
-        
         while (!in.isEOF()) {
-            aItem = new myItem(in);
+            // Read item details first
+            String type = in.readString();
+            String itemName = in.readString();
+            String itemDesc = in.readString();
+            
+            // Read arrangement-specific quantity
+            int arrangeQty = in.readInt();
+            
+            // Read inventory
+            int itemInv = in.readInt();
+            
+            // Create item with basic details
+            aItem = new myItem(itemName, itemDesc, itemInv, type);
             
             if (aItem.getName() == null || aItem.getName().isEmpty()) {
-                //System.out.println("DEBUG: Skipping invalid item at line " + (itemCount + 1));
                 continue;
             }
-            r.addItem(aItem, r.getItemQty(aItem.getName(), in));
+            
+            // Add item with its specific arrangement quantity
+            r.addItem(aItem, arrangeQty);
         }
         in.close();
         if (r.itemHead == null) {
@@ -55,7 +79,7 @@ public class doArrg {
     }
     
     
-    public void displayItems(myItem c, myArrangement r, ASCIIDataFile in) {
+    public void displayItems(myItem c, myArrangement r) {
         if (c == null) {
             System.out.println("DEBUG: No valid item to display.");
             form.writeString("name", "");
@@ -67,31 +91,92 @@ public class doArrg {
             return;
         }
         
-        String price = "" + arrgPrice;
-        form.writeLine("arrgName", arrgName + "    " + price);
+        String price = "" + r.getPrice();
+        form.writeLine("arrgName", r.getName() + "    " + price);
         form.writeString("name", c.getName());
         form.writeString("desc", c.getDescription());
         form.writeInt("qty", r.displayItemQty());
         form.writeInt("inv", c.getInv());
         form.writeString("type", c.getType());
         
-        
     }
     
-    public void open(ASCIIDataFile in, myArrangement r) {
+    public void addForm(myArrangement r) {
+        int button = addForm.accept();
+        switch (button) {
+            case 0:
+                String type = addForm.readString("type");
+                String name = addForm.readString("name");
+                String desc = addForm.readString("desc");
+                int qty = addForm.readInt("qty");
+                int inv = addForm.readInt("inv");
+                
+                myItem aItem = new myItem(name, desc, inv, type);
+                if (aItem.getName() == null || aItem.getName().isEmpty()) {
+                    return;
+                } else {
+                    r.addItem(aItem, qty);
+                    addForm.hide();
+                    
+                }
+            
+            case 1:
+                return;
+        }
+    }
+    
+    public void delete(String search, myArrangement r) {
+        r.removeItem(search);
+    }
+    
+    public void edit(myItem c, myArrangement r) {
+        
+        addForm.writeString("name", c.getName());
+        addForm.writeString("desc", c.getDescription());
+        addForm.writeInt("qty", r.displayItemQty());
+        addForm.writeInt("inv", c.getInv());
+        addForm.writeString("type", c.getType());
+        
+        int button = addForm.accept();
+        switch (button) {
+            case 0:
+                String type = addForm.readString("type");
+                String itemName = addForm.readString("name");
+                String itemDesc = addForm.readString("desc");
+                int qty = addForm.readInt("qty");
+                int inv = addForm.readInt("inv");
+                if (itemName == null || itemName.isEmpty()) {
+                    return;
+                } else {
+                    r.changeItemQuantity(c.getName(), qty);
+                    c.setName(itemName);
+                    c.setDescription(itemDesc);
+                    c.setInv(inv);
+                    c.setType(type);
+                    addForm.hide();
+                }
+            case 1:
+                return;
+        }
+    }
+    
+    public void open(ASCIIDataFile in, myArrangement r, ASCIIOutputFile out) {
         formSetup();
         
         r.listStart();
         
         loadItems(in, r);
-        myItem current = r.getCurrent();
+        
+        // Use the new getFirstItem method
+        myItem current = r.getFirstItem();
+        myItem temp;
         
         if (current == null) {
             System.out.println("No items loaded");
             return;
         }
         
-        displayItems(current, r, in);
+        displayItems(current, r);
         int button;
         while (true) {
             button = form.accept();
@@ -103,22 +188,31 @@ public class doArrg {
                     current = r.down();
                     break;
                 case 2: // Add
-                    // Implement add item functionality
+                    addForm(r);
+                    current = r.getCurrent();
                     break;
-                case 3: // Delete
-                    // Implement delete item functionality
+                case 3:
+                    delete(current.getName(), r);
+                    current = r.getCurrent();
                     break;
-                case 4: // List
+                case 4:
+                    edit(current, r);
+                    break;
+                case 5:
                     r.listItems();
                     break;
-                case 5: // Find
-                    // Implement search functionality
+                case 6:
+                    temp = r.search(form.readString("find"));
+                    if (temp != null) {
+                        current = temp;
+                    }
                     break;
-                case 6: // Exit
+                case 7:
+                    r.save(out);
                     form.close();
-                    return;
+                    break;
             }
-            displayItems(current, r, in);
+            displayItems(current, r);
             
         }
         

@@ -30,6 +30,10 @@ public class myItem implements item {
         return type;
     }
     
+    public void setType(String newType) {
+        type = newType;
+    }
+    
     @Override
     public String getName() {
         return name;

@@ -1,6 +1,7 @@
 package arrangement;
 
 import BasicIO.ASCIIDataFile;
+import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
 import BasicIO.BasicForm;
 import minor.myItem;
@@ -24,31 +25,6 @@ public class myArrangement implements arrangement {
         itemHead = null;
         itemTail = null;
         current = null;
-    }
-    
-    @Override
-    public void load(ASCIIDataFile in) {
-        // Read the arrangement name and price
-        name = in.readString();
-        price = in.readDouble();
-        
-        // Clear any existing items
-        itemHead = null;
-        itemTail = null;
-        current = null;
-        
-        // Load items
-        while (!in.isEOF()) {
-            String type = in.readString();
-            String itemName = in.readString();
-            String itemDesc = in.readString();
-            
-            int itemQty = in.readInt();
-            int itemInv = in.readInt();
-            
-            myItem aItem = new myItem(itemName, itemDesc, itemInv, type);
-            addItem(aItem, itemQty);
-        }
     }
     
     @Override
@@ -78,20 +54,20 @@ public class myArrangement implements arrangement {
     }
     
     @Override
-    public void search(String search) {
-        itemNode p = itemHead;
+    public myItem search(String name) {
+        if (itemHead == null) {
+            return null;
+        }
         
-        while (p != null) {
-            if (p.c.getName().equals(search)) {
-                System.out.println(p.c.getName());
-                System.out.println(p.c.getDescription());
-                System.out.println(p.c.getType());
-                System.out.println("qty: " + p.qty);
-                System.out.println("inv: " + p.c.getInv());
-                break;
+        itemNode p = itemHead;
+        do {
+            if (p.c.getName().toLowerCase().contains(name.toLowerCase())) {
+                return p.c;
             }
             p = p.next;
-        }
+        } while (p != null);
+        
+        return null;
     }
     
     @Override
@@ -181,12 +157,19 @@ public class myArrangement implements arrangement {
     public void listItems() {
         itemNode p = itemHead;
         
+        ASCIIDisplayer out = new ASCIIDisplayer();
+        
+        
+        out.writeLine(name + "    $" + price);
+        
         while (p != null) {
             if (p.qty != 0) {
-                System.out.println(p.c.getType() + "    " + p.c.getName() + "    " + p.qty + "    " + p.c.getInv());
+                out.writeLine(p.c.getType() + "    " + p.c.getName() + "    " + p.qty + "    " + p.c.getInv());
             }
             p = p.next;
         }
+        out.waitForUser();
+        out.hide();
     }
     
     public myItem getCurrent() {
@@ -224,25 +207,18 @@ public class myArrangement implements arrangement {
         return current.c;
     }
     
-    public int getItemQty(String search, ASCIIDataFile in) {
-        /*
-        String temp = in.readString();
-        int numTemp = (int) in.readDouble();
-        
-        while (! in.isEOF()) {
-            temp = in.readString();
-            String searchName = in.readString();
-            temp = in.readString();
-            if (searchName.equalsIgnoreCase(search)) {
-                int itemQty = in.readInt();
-                return itemQty;
-            }
-            numTemp = in.readInt();
-        }*/
-        return 0;
+    public int displayItemQty() {
+        if (current == null) {
+            return 0;
+        }
+        return current.qty;
     }
     
-    public int displayItemQty() {
-        return current.qty;
+    public myItem getFirstItem() {
+        if (itemHead == null) {
+            return null;
+        }
+        current = itemHead;
+        return current.c;
     }
 }

@@ -1,0 +1,6 @@
+testDis	69.3
+flower	rose	a red flower	12	88
+flower	tulip	a blue flower	4	90
+vase	crystal vase	a crystal vase	1	2
+flower	sunflower	a yellow flower	78	92
+vase	Clay vase	A regular clay vase	1	20

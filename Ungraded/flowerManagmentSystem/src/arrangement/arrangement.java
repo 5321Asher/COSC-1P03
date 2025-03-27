@@ -1,17 +1,17 @@
 package arrangement;
 
 import BasicIO.ASCIIDataFile;
+import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
 import minor.*;
 
 public interface arrangement {
-    public void load(ASCIIDataFile in);
     
     public void save(ASCIIOutputFile out);
     
     public void listStart();
     
-    public void search(String search);
+    public myItem search(String search);
     
     public void addItem(myItem item, int qty);
     
