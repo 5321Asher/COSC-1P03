@@ -1,1 +1,5 @@
-Ashers Flower Shop	68.99	rose	a red flower	999	88	tulip	a blue flower	4	90	flower	a;lkdfa	9	10	clay	a brown vase	2	7	crystal vase	a crystel vase	100	2
+Asher's arr	68.99
+flower	rose	a red flower	12	88
+vase	clay	a brown vase	2	7
+flower	tulip	a blue flower	4	90
+vase	crystal vase	a crystal vase	1	2

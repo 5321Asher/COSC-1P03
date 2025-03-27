@@ -1,19 +1,23 @@
 package arrangement;
 
+import BasicIO.ASCIIDataFile;
+import BasicIO.ASCIIOutputFile;
 import minor.*;
 
 public interface arrangement {
-    public void addFlower(myFlower flower, int qty);
+    public void load(ASCIIDataFile in);
     
-    public void removeFlower(String search);
+    public void save(ASCIIOutputFile out);
     
-    public void addVase(myVase vase, int qty);
+    public void listStart();
     
-    public void removeVase(String search);
+    public void search(String search);
     
-    public void changeFlowerQuantity(String search, int newQty);
+    public void addItem(myItem item, int qty);
     
-    public void changeVaseQuantity(String search, int newQty);
+    public void removeItem(String search);
+    
+    public void changeItemQuantity(String search, int newQty);
     
     public void setName(String name);
     

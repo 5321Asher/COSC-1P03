@@ -1,13 +1,25 @@
 package minor;
 
-public class myFlower implements flower {
+import BasicIO.ASCIIDataFile;
+
+public class myItem implements item {
     
     String name;
     String description;
     int inv;
     String type;
     
-    public myFlower(String name, String description, int inv, String type) {
+    public myItem(ASCIIDataFile from) {
+        type = from.readString();
+        if (from.successful()) {
+            name = from.readString();
+            description = from.readString();
+            int skip = from.readInt();
+            inv = from.readInt();
+        }
+    }//constructor
+    
+    public myItem(String name, String description, int inv, String type) {
         this.name = name;
         this.description = description;
         this.inv = inv;

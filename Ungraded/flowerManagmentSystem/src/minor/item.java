@@ -1,6 +1,6 @@
 package minor;
 
-public interface flower {
+public interface item {
     
     public String getName();
     
