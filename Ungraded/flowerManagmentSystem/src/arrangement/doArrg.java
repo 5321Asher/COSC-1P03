@@ -3,28 +3,30 @@ package arrangement;
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIOutputFile;
 import BasicIO.BasicForm;
+import Media.Picture;
 import minor.myItem;
 
 public class doArrg {
     
     BasicForm form;
     BasicForm addForm;
+    BasicForm findForm;
     String arrgName;
     double arrgPrice;
     
     public void formSetup() {
-        form = new BasicForm("Up", "Down", "Add", "Delete", "Edit", "List", "Find", "Exit");
+        form = new BasicForm("Previous Item", "Next Item", "Add Item", "Delete Item", "Edit Item", "List Items", "Find Item", "Exit");
         
-        form.addTextField("arrgName", "Arrangement", 20);
         form.addTextField("name", "Name   ", 20);
+        form.addTextField("price", "Price    ", 10);
         form.addTextField("desc", "Description      ", 20);
-        form.addTextField("qty", "Quantity", 10);
-        form.addTextField("inv", "Inventory", 10);
+        form.addTextField("qty", "Quantity    ", 10);
+        form.addTextField("inv", "Inventory    ", 10);
         form.addTextField("type", "Type    ", 20);
-        form.addTextField("find", "Find", 20);
+        form.addCanvas("pic", 300, 300, 400, 0);
         
-        form.setEditable("arrgName", false);
         form.setEditable("name", false);
+        form.setEditable("price", false);
         form.setEditable("desc", false);
         form.setEditable("qty", false);
         form.setEditable("inv", false);
@@ -35,10 +37,18 @@ public class doArrg {
         addForm = new BasicForm("Ok", "Cancel");
         
         addForm.addTextField("name", "Name   ", 20);
+        addForm.addTextField("price", "Price    ", 10);
         addForm.addTextField("desc", "Description      ", 20);
-        addForm.addTextField("qty", "Quantity", 10);
-        addForm.addTextField("inv", "Inventory", 10);
+        addForm.addTextField("qty", "Quantity    ", 10);
+        addForm.addTextField("inv", "Inventory    ", 10);
         addForm.addTextField("type", "Type    ", 20);
+        addForm.addTextField("file", "File Directory   ", 20);
+        
+        /////////////////////////////////////////////////////////////////////////
+        
+        findForm = new BasicForm("Find", "Cancel");
+        
+        findForm.addTextField("find", "Find   ", 20);
     }
     
     public void loadItems(ASCIIDataFile in, myArrangement r) {
@@ -59,9 +69,11 @@ public class doArrg {
             
             // Read inventory
             int itemInv = in.readInt();
+            double price = in.readDouble();
+            String file = in.readString();
             
             // Create item with basic details
-            aItem = new myItem(itemName, itemDesc, itemInv, type);
+            aItem = new myItem(itemName, itemDesc, itemInv, type, price, file);
             
             if (aItem.getName() == null || aItem.getName().isEmpty()) {
                 continue;
@@ -83,6 +95,7 @@ public class doArrg {
         if (c == null) {
             System.out.println("DEBUG: No valid item to display.");
             form.writeString("name", "");
+            form.writeString("price", "");
             form.writeString("desc", "");
             form.writeString("qty", "");
             form.writeString("inv", "");
@@ -91,13 +104,15 @@ public class doArrg {
             return;
         }
         
-        String price = "" + r.getPrice();
-        form.writeLine("arrgName", r.getName() + "    " + price);
+        form.setTitle(arrgName + " - Items");
         form.writeString("name", c.getName());
+        form.writeDouble("price", c.getPrice());
         form.writeString("desc", c.getDescription());
         form.writeInt("qty", r.displayItemQty());
         form.writeInt("inv", c.getInv());
         form.writeString("type", c.getType());
+        Picture p = new Picture(c.getFile());
+        form.placePicture("pic", p);
         
     }
     
@@ -107,11 +122,14 @@ public class doArrg {
             case 0:
                 String type = addForm.readString("type");
                 String name = addForm.readString("name");
+                double price = addForm.readDouble("price");
                 String desc = addForm.readString("desc");
                 int qty = addForm.readInt("qty");
                 int inv = addForm.readInt("inv");
+                String file = addForm.readString("file");
                 
-                myItem aItem = new myItem(name, desc, inv, type);
+                
+                myItem aItem = new myItem(name, desc, inv, type, price, file);
                 if (aItem.getName() == null || aItem.getName().isEmpty()) {
                     return;
                 } else {
@@ -132,19 +150,23 @@ public class doArrg {
     public void edit(myItem c, myArrangement r) {
         
         addForm.writeString("name", c.getName());
+        addForm.writeDouble("price", c.getPrice());
         addForm.writeString("desc", c.getDescription());
         addForm.writeInt("qty", r.displayItemQty());
         addForm.writeInt("inv", c.getInv());
         addForm.writeString("type", c.getType());
+        addForm.writeString("file", c.getFile());
         
         int button = addForm.accept();
         switch (button) {
             case 0:
                 String type = addForm.readString("type");
                 String itemName = addForm.readString("name");
+                double price = addForm.readDouble("price");
                 String itemDesc = addForm.readString("desc");
                 int qty = addForm.readInt("qty");
                 int inv = addForm.readInt("inv");
+                String file = addForm.readString("file");
                 if (itemName == null || itemName.isEmpty()) {
                     return;
                 } else {
@@ -153,6 +175,8 @@ public class doArrg {
                     c.setDescription(itemDesc);
                     c.setInv(inv);
                     c.setType(type);
+                    c.setPrice(price);
+                    c.setFile(file);
                     addForm.hide();
                 }
             case 1:
@@ -202,9 +226,16 @@ public class doArrg {
                     r.listItems();
                     break;
                 case 6:
-                    temp = r.search(form.readString("find"));
-                    if (temp != null) {
-                        current = temp;
+                    int findButton = findForm.accept();
+                    switch (findButton) {
+                        case 0:
+                            temp = r.search(findForm.readString("find"));
+                            if (temp != null) {
+                                current = temp;
+                            }
+                            findForm.hide();
+                        case 1:
+                            break;
                     }
                     break;
                 case 7:

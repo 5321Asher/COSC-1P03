@@ -1,9 +1,7 @@
 package arrangement;
 
-import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
-import BasicIO.BasicForm;
 import minor.myItem;
 
 public class myArrangement implements arrangement {
@@ -11,17 +9,12 @@ public class myArrangement implements arrangement {
     itemNode itemHead, itemTail;
     itemNode current;
     
-    ASCIIOutputFile out;
-    
-    BasicForm form;
-    
     String name;
     double price;
     
     public myArrangement(String name, double price) {
         this.name = name;
         this.price = price;
-        // Initialize list to empty
         itemHead = null;
         itemTail = null;
         current = null;
@@ -41,6 +34,7 @@ public class myArrangement implements arrangement {
                 out.writeString(p.c.getDescription());
                 out.writeInt(p.qty);
                 out.writeInt(p.c.getInv());
+                out.writeDouble(p.c.getPrice());
                 out.writeLine("");
             }
             p = p.next;
@@ -164,7 +158,7 @@ public class myArrangement implements arrangement {
         
         while (p != null) {
             if (p.qty != 0) {
-                out.writeLine(p.c.getType() + "    " + p.c.getName() + "    " + p.qty + "    " + p.c.getInv());
+                out.writeLine(p.c.getType() + "    " + p.c.getName() + "    " + p.qty + "    " + p.c.getInv() + "    " + p.c.getPrice());
             }
             p = p.next;
         }
@@ -172,10 +166,12 @@ public class myArrangement implements arrangement {
         out.hide();
     }
     
+    @Override
     public myItem getCurrent() {
         return current.c;
     }
     
+    @Override
     public myItem up() {//Returns the next contact in the structure
         
         if (current == null) {
@@ -192,6 +188,7 @@ public class myArrangement implements arrangement {
         
     }
     
+    @Override
     public myItem down() {//Returns the previous contact in the structure
         
         if (current == null) {
@@ -207,6 +204,7 @@ public class myArrangement implements arrangement {
         return current.c;
     }
     
+    @Override
     public int displayItemQty() {
         if (current == null) {
             return 0;
@@ -214,6 +212,7 @@ public class myArrangement implements arrangement {
         return current.qty;
     }
     
+    @Override
     public myItem getFirstItem() {
         if (itemHead == null) {
             return null;

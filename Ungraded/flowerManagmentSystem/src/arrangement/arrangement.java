@@ -29,4 +29,13 @@ public interface arrangement {
     
     public void listItems();
     
+    public myItem getCurrent();
+    
+    public myItem up();
+    
+    public myItem down();
+    
+    public int displayItemQty();
+    
+    public myItem getFirstItem();
 }
