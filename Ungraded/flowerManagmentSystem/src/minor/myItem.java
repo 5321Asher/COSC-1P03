@@ -32,29 +32,36 @@ public class myItem implements item {
         this.file = file;
     }
     
+    @Override
     public void setFile(String newFile) {
         this.file = newFile;
     }
     
+    @Override
     public String getFile() {
         return file;
     }
     
+    @Override
     public double getPrice() {
         return price;
     }
     
+    @Override
     public void setPrice(double newPrice) {
         price = newPrice;
     }
     
+    @Override
     public String getType() {
         return type;
     }
     
+    @Override
     public void setType(String newType) {
         type = newType;
     }
+    
     
     @Override
     public String getName() {

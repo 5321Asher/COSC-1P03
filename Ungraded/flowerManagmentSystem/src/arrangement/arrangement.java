@@ -7,7 +7,13 @@ import minor.*;
 
 public interface arrangement {
     
-    public void save(ASCIIOutputFile out);
+    public String getLoadFile();
+    
+    public String getPicFile();
+    
+    public void setPicFile(String newPicFile);
+    
+    public void saveArrangementItemList(ASCIIOutputFile out);
     
     public void listStart();
     

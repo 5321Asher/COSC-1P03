@@ -1,0 +1,3 @@
+Asher's Test Arrangement	69.3
+flower	rose	a red flower	1	10	2.0	rose.png
+vase	clay	a brown vase	1	11	14.0	clay.png

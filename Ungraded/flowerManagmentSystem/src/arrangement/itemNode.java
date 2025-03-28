@@ -14,8 +14,4 @@ public class itemNode {
         this.c = c;
         next = n;
     }
-    
-    public int getQty() {
-        return qty;
-    }
 }

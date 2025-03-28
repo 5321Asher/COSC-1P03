@@ -13,4 +13,18 @@ public interface item {
     public int getInv();
     
     public void setInv(int inv);
+    
+    public void setType(String newType);
+    
+    public String getType();
+    
+    public void setPrice(double newPrice);
+    
+    public double getPrice();
+    
+    public String getFile();
+    
+    public void setFile(String newFile);
+    
+    
 }

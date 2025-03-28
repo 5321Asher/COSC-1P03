@@ -1,5 +1,6 @@
 package arrangement;
 
+import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
 import minor.myItem;
@@ -11,17 +12,55 @@ public class myArrangement implements arrangement {
     
     String name;
     double price;
+    String loadFile;
+    String picFile;
     
-    public myArrangement(String name, double price) {
+    public myArrangement(String createName, double createPrice) {
+        name = createName;
+        price = createPrice;
+        loadFile = name + ".txt";
+        ASCIIOutputFile out = new ASCIIOutputFile(loadFile);
+        myItem filler = new myItem("replace", "replace this for you first item", 1, "filler", 1, "rose.png");
+        addItem(filler, 1);
+        saveArrangementItemList(out);
+    }
+    
+    public myArrangement(ASCIIDataFile from) {
+        name = from.readString();
+        if (from.successful()) {
+            price = from.readDouble();
+            loadFile = from.readString();
+            picFile = from.readString();
+        }
+    }
+    
+    public myArrangement(String name, double price, String picFile) {
         this.name = name;
         this.price = price;
+        loadFile = name + ".txt";
+        this.picFile = picFile;
         itemHead = null;
         itemTail = null;
         current = null;
     }
     
     @Override
-    public void save(ASCIIOutputFile out) {
+    public String getLoadFile() {
+        return loadFile;
+    }
+    
+    @Override
+    public String getPicFile() {
+        return picFile;
+    }
+    
+    @Override
+    public void setPicFile(String newPicFile) {
+        this.picFile = newPicFile;
+    }
+    
+    @Override
+    public void saveArrangementItemList(ASCIIOutputFile out) {
         out.writeString(name);
         out.writeDouble(price);
         out.writeLine("");
@@ -35,6 +74,7 @@ public class myArrangement implements arrangement {
                 out.writeInt(p.qty);
                 out.writeInt(p.c.getInv());
                 out.writeDouble(p.c.getPrice());
+                out.writeString(p.c.getFile());
                 out.writeLine("");
             }
             p = p.next;

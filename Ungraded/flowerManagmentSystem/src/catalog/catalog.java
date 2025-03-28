@@ -1,27 +1,36 @@
 package catalog;
 
 import BasicIO.ASCIIOutputFile;
-import arrangement.myArrangement;
 
-public interface catalog {
+public interface catalog<T> {
+    
+    public String getName();
+    
+    public void setName(String newName);
+    
+    public String getType();
+    
+    public void setType(String newType);
     
     public void load();
     
-    public void save(ASCIIOutputFile out);
+    public void save();
     
     public void listStart();
     
-    public myArrangement search(String search);
+    public T search(String search);
     
-    public void addArrangement(myArrangement object);
+    public void addObject(T object);
     
-    public void removeArrangement(String delete);
+    public void removeObject(String delete);
     
-    public myArrangement getCurrent();
+    public T getCurrent();
     
-    public myArrangement up();
+    public T up();
     
-    public myArrangement down();
+    public T down();
     
-    public myArrangement getFirstArrangement();
+    public T getFirstObject();
+    
+    public void list();
 }
