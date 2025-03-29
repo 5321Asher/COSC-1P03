@@ -1,4 +1,4 @@
-import catalog.*;
+import backend.catalog.*;
 
 public class MS {
     public static void main(String[] args) {
@@ -6,5 +6,6 @@ public class MS {
         cataHub cataHub = new cataHub();
         
         cataHub.select();
+        System.exit(0);
     }
 }

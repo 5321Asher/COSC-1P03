@@ -1,13 +1,14 @@
-package catalog;
+package backend.catalog;
 
 import BasicIO.BasicForm;
 import Media.Picture;
-import item.myItem;
+import backend.item.myItem;
 
 public class doCataItem {
     BasicForm form;
     BasicForm addForm;
     BasicForm findForm;
+    BasicForm customerForm;
     
     public void formSetup() {
         form = new BasicForm("Previous Item", "Next Item", "Add Item", "Delete Item", "Edit Item", "List Items", "Find Item", "Exit");
@@ -45,11 +46,28 @@ public class doCataItem {
         findForm.setTitle("Find Item");
         
         findForm.addTextField("find", "Find   ", 40);
+        
+        ///////////////////////////////////////////////////////////////
+        
+        customerForm = new BasicForm("Previous Item", "Next Item", "Find Item", "Ok");
+        
+        customerForm.addTextField("name", "Name   ", 40);
+        customerForm.addTextField("price", "Price    ", 10);
+        customerForm.addTextField("desc", "Description      ", 40);
+        customerForm.addTextField("inv", "Inventory    ", 10);
+        customerForm.addTextField("type", "Type    ", 20);
+        customerForm.addCanvas("pic", 300, 300, 500, 0);
+        
+        customerForm.setEditable("name", false);
+        customerForm.setEditable("price", false);
+        customerForm.setEditable("desc", false);
+        customerForm.setEditable("inv", false);
+        customerForm.setEditable("type", false);
     }
     
     public void display(myItem c, itemCatalog r) {
         if (c == null) {
-            System.out.println("DEBUG: No valid item to display.");
+            System.out.println("DEBUG: No valid backend.item to display.");
             form.writeString("name", "");
             form.writeString("price", "");
             form.writeString("desc", "");
@@ -66,6 +84,17 @@ public class doCataItem {
         form.writeString("type", c.getType());
         Picture p = new Picture(c.getFile());
         form.placePicture("pic", p);
+    }
+    
+    public void customerDisplay(myItem c, itemCatalog r) {
+        customerForm.setTitle(r.getName());
+        customerForm.writeString("name", c.getName());
+        customerForm.writeDouble("price", c.getPrice());
+        customerForm.writeString("desc", c.getDescription());
+        customerForm.writeInt("inv", c.getInv());
+        customerForm.writeString("type", c.getType());
+        Picture p = new Picture(c.getFile());
+        customerForm.placePicture("pic", p);
     }
     
     public void addForm(itemCatalog r) {
@@ -128,6 +157,59 @@ public class doCataItem {
                 }
             case 1:
                 return;
+        }
+    }
+    
+    public void customer(itemCatalog r) {
+        formSetup();
+        r.listStart();
+        r.load();
+        
+        myItem current = r.getFirstObject();
+        myItem temp;
+        
+        if (current == null) {
+            System.out.println("No Items Loaded");
+            return;
+        }
+        
+        customerDisplay(current, r);
+        int button;
+        while (true) {
+            button = customerForm.accept();
+            switch (button) {
+                case 0:
+                    current = r.up();
+                    break;
+                
+                case 1:
+                    current = r.down();
+                    break;
+                
+                case 2:
+                    int findButton = findForm.accept();
+                    switch (findButton) {
+                        case 0:
+                            temp = r.search(findForm.readString("find"));
+                            if (temp != null) {
+                                current = temp;
+                            }
+                            findForm.hide();
+                        case 1:
+                            break;
+                    }
+                    break;
+                    
+                case 3:
+                    r.save();
+                    form.close();
+                    addForm.close();
+                    findForm.close();
+                    customerForm.close();
+                    return;
+            }
+            customerDisplay(current, r);
+            
         }
     }
     
@@ -194,6 +276,7 @@ public class doCataItem {
                     form.close();
                     addForm.close();
                     findForm.close();
+                    customerForm.close();
                     return;
             }
             display(current, r);

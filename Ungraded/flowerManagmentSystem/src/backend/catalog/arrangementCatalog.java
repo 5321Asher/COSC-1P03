@@ -1,10 +1,10 @@
-package catalog;
+package backend.catalog;
 
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
-import arrangement.doArrg;
-import arrangement.myArrangement;
+import backend.arrangement.doArrg;
+import backend.arrangement.myArrangement;
 
 public class arrangementCatalog implements catalog<myArrangement> {
     
@@ -228,6 +228,17 @@ public class arrangementCatalog implements catalog<myArrangement> {
         ASCIIOutputFile arrgOut = new ASCIIOutputFile(r.getLoadFile());
         
         arrg.open(arrgIn, r, arrgOut);
+        arrgIn.close();
+        arrgOut.close();
+    }
+    
+    public void customer(myArrangement r) {
+        doArrg arrg = new doArrg();
+        
+        ASCIIDataFile arrgIn = new ASCIIDataFile(r.getLoadFile());
+        ASCIIOutputFile arrgOut = new ASCIIOutputFile(r.getLoadFile());
+        
+        arrg.customer(arrgIn, r, arrgOut);
         arrgIn.close();
         arrgOut.close();
     }

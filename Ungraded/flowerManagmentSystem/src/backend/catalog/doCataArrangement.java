@@ -1,14 +1,14 @@
-package catalog;
+package backend.catalog;
 
 import BasicIO.BasicForm;
 import Media.Picture;
-import arrangement.myArrangement;
+import backend.arrangement.myArrangement;
 
 public class doCataArrangement {
     BasicForm form;
     BasicForm addForm;
     BasicForm findForm;
-    BasicForm createForm;
+    BasicForm customerForm;
     
     public void formSetup() {
         form = new BasicForm("Previous Item", "Next Item", "Add Item", "Delete Item", "Edit Item", "List Items", "Find Item", "Open Item List", "Exit");
@@ -40,18 +40,19 @@ public class doCataArrangement {
         
         //////////////////////////////////////////////////////////////
         
-        createForm = new BasicForm("Create", "Cancel");
+        customerForm = new BasicForm("Previous Arrangement", "Next Arrangement", "Find Arrangement", "Open Item List", "Ok");
         
-        createForm.setTitle("Create Arrangement");
+        customerForm.addTextField("name", "Name   ", 40);
+        customerForm.addTextField("price", "Price    ", 10);
+        customerForm.addCanvas("pic", 300, 300, 500, 0);
         
-        createForm.addTextField("name", "Name   ", 40);
-        createForm.addTextField("price", "Price    ", 10);
-        createForm.addTextField("picFile", "Picture Dir      ", 20);
+        customerForm.setEditable("name", false);
+        customerForm.setEditable("price", false);
     }
     
     public void display(myArrangement c, arrangementCatalog r) {
         if (c == null) {
-            System.out.println("DEBUG: No valid item to display.");
+            System.out.println("DEBUG: No valid backend.item to display.");
             form.writeString("name", "");
             form.writeString("price", "");
             return;
@@ -62,6 +63,14 @@ public class doCataArrangement {
         form.writeDouble("price", c.getPrice());
         Picture p = new Picture(c.getPicFile());
         form.placePicture("pic", p);
+    }
+    
+    public void customerDisplay(myArrangement c, arrangementCatalog r) {
+        customerForm.setTitle(r.getName());
+        customerForm.writeString("name", c.getName());
+        customerForm.writeDouble("price", c.getPrice());
+        Picture p = new Picture(c.getPicFile());
+        customerForm.placePicture("pic", p);
     }
     
     public void addForm(arrangementCatalog r) {
@@ -108,6 +117,63 @@ public class doCataArrangement {
                 }
             case 1:
                 return;
+        }
+    }
+    
+    public void customer(arrangementCatalog r) {
+        formSetup();
+        r.listStart();
+        r.load();
+        
+        myArrangement current = r.getFirstObject();
+        myArrangement temp;
+        
+        if (current == null) {
+            System.out.println("No Items Loaded");
+            return;
+        }
+        
+        customerDisplay(current, r);
+        int button;
+        while (true) {
+            button = customerForm.accept();
+            switch (button) {
+                case 0:
+                    current = r.up();
+                    break;
+                
+                case 1:
+                    current = r.down();
+                    break;
+                    
+                case 2:
+                    int findButton = findForm.accept();
+                    switch (findButton) {
+                        case 0:
+                            temp = r.search(findForm.readString("find"));
+                            if (temp != null) {
+                                current = temp;
+                            }
+                            findForm.hide();
+                        case 1:
+                            break;
+                    }
+                    break;
+                    
+                case 3:
+                    r.customer(current);
+                    break;
+                    
+                case 4:
+                    r.save();
+                    form.close();
+                    addForm.close();
+                    findForm.close();
+                    customerForm.close();
+                    return;
+            }
+            customerDisplay(current, r);
+            
         }
     }
     
@@ -178,7 +244,6 @@ public class doCataArrangement {
                     form.close();
                     addForm.close();
                     findForm.close();
-                    createForm.close();
                     return;
             }
             display(current, r);

@@ -1,6 +1,6 @@
-package catalog;
+package backend.catalog;
 
-import arrangement.myArrangement;
+import backend.arrangement.myArrangement;
 
 public class cataArrgNode {
     myArrangement c;

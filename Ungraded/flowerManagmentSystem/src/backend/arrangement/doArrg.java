@@ -1,22 +1,22 @@
-package arrangement;
+package backend.arrangement;
 
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIOutputFile;
 import BasicIO.BasicForm;
 import Media.Picture;
-import item.myItem;
+import backend.item.myItem;
 
 public class doArrg {
     
     BasicForm form;
     BasicForm addForm;
     BasicForm findForm;
+    BasicForm customerForm;
     String arrgName;
     double arrgPrice;
     
     public void formSetup() {
         form = new BasicForm("Previous Item", "Next Item", "Add Item", "Delete Item", "Edit Item", "List Items", "Find Item", "Exit");
-        
         
         form.addTextField("name", "Name   ",40);
         form.addTextField("price", "Price    ", 10);
@@ -54,6 +54,25 @@ public class doArrg {
         findForm.setTitle("Find Item");
         
         findForm.addTextField("find", "Find   ", 40);
+        
+        ///////////////////////////////////////////////////////////////
+        
+        customerForm = new BasicForm("Previous Item", "Next Item", "List Items", "Find Item", "Ok");
+        
+        customerForm.addTextField("name", "Name   ",40);
+        customerForm.addTextField("price", "Price    ", 10);
+        customerForm.addTextField("desc", "Description      ", 40);
+        customerForm.addTextField("qty", "Quantity    ", 10);
+        customerForm.addTextField("inv", "Inventory    ", 10);
+        customerForm.addTextField("type", "Type    ", 20);
+        customerForm.addCanvas("pic", 300, 300, 500, 0);
+        
+        customerForm.setEditable("name", false);
+        customerForm.setEditable("price", false);
+        customerForm.setEditable("desc", false);
+        customerForm.setEditable("qty", false);
+        customerForm.setEditable("inv", false);
+        customerForm.setEditable("type", false);
     }
     
     public void loadItems(ASCIIDataFile in, myArrangement r) {
@@ -63,12 +82,12 @@ public class doArrg {
         arrgPrice = in.readDouble();
         
         while (!in.isEOF()) {
-            // Read item details first
+            // Read backend.item details first
             String type = in.readString();
             String itemName = in.readString();
             String itemDesc = in.readString();
             
-            // Read arrangement-specific quantity
+            // Read backend.backend.customer.backend.customer.backend.customer.arrangement.backend.customer.backend.customer.arrangement-specific quantity
             int arrangeQty = in.readInt();
             
             // Read inventory
@@ -76,14 +95,14 @@ public class doArrg {
             double price = in.readDouble();
             String file = in.readString();
             
-            // Create item with basic details
+            // Create backend.item with basic details
             aItem = new myItem(itemName, itemDesc, itemInv, type, price, file);
             
             if (aItem.getName() == null || aItem.getName().isEmpty()) {
                 continue;
             }
             
-            // Add item with its specific arrangement quantity
+            // Add backend.item with its specific backend.backend.customer.backend.customer.backend.customer.arrangement.backend.customer.backend.customer.arrangement quantity
             r.addItem(aItem, arrangeQty);
         }
         in.close();
@@ -97,7 +116,7 @@ public class doArrg {
     
     public void displayItems(myItem c, myArrangement r) {
         if (c == null) {
-            System.out.println("DEBUG: No valid item to display.");
+            System.out.println("DEBUG: No valid backend.item to display.");
             form.writeString("name", "");
             form.writeString("price", "");
             form.writeString("desc", "");
@@ -118,6 +137,17 @@ public class doArrg {
         Picture p = new Picture(c.getFile());
         form.placePicture("pic", p);
         
+    }
+    
+    public void displayItemsCustomer(myItem c, myArrangement r) {
+        customerForm.writeString("name", c.getName());
+        customerForm.writeDouble("price", c.getPrice());
+        customerForm.writeString("desc", c.getDescription());
+        customerForm.writeInt("qty", r.displayItemQty());
+        customerForm.writeInt("inv", c.getInv());
+        customerForm.writeString("type", c.getType());
+        Picture p = new Picture(c.getFile());
+        customerForm.placePicture("pic", p);
     }
     
     public void addForm(myArrangement r) {
@@ -191,6 +221,65 @@ public class doArrg {
         }
     }
     
+    public void customer(ASCIIDataFile in, myArrangement r, ASCIIOutputFile out) {
+        formSetup();
+        
+        r.listStart();
+        
+        loadItems(in, r);
+        
+        myItem current = r.getFirstItem();
+        myItem temp;
+        
+        if (current == null) {
+            System.out.println("No items loaded");
+            return;
+        }
+        
+        displayItemsCustomer(current, r);
+        int button;
+        while (true) {
+            button = customerForm.accept();
+            switch (button) {
+                case 0:
+                    current = r.up();
+                    break;
+                
+                case 1: // Down
+                    current = r.down();
+                    break;
+                
+                case 2:
+                    r.listItems();
+                    break;
+                    
+                case 3:
+                    int findButton = findForm.accept();
+                    switch (findButton) {
+                        case 0:
+                            temp = r.search(findForm.readString("find"));
+                            if (temp != null) {
+                                current = temp;
+                            }
+                            findForm.hide();
+                        case 1:
+                            break;
+                    }
+                    break;
+                    
+                case 4:
+                    r.saveArrangementItemList(out);
+                    form.close();
+                    addForm.close();
+                    findForm.close();
+                    customerForm.close();
+                    return;
+            }
+            displayItemsCustomer(current, r);
+            
+        }
+    }
+    
     public void open(ASCIIDataFile in, myArrangement r, ASCIIOutputFile out) {
         formSetup();
         
@@ -247,9 +336,10 @@ public class doArrg {
                     break;
                 case 7:
                     r.saveArrangementItemList(out);
-                    form.hide();
-                    addForm.hide();
-                    findForm.hide();
+                    form.close();
+                    addForm.close();
+                    findForm.close();
+                    customerForm.close();
                     return;
             }
             displayItems(current, r);

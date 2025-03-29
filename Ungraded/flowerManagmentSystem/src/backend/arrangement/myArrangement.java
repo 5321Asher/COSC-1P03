@@ -1,9 +1,9 @@
-package arrangement;
+package backend.arrangement;
 
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
-import item.myItem;
+import backend.item.myItem;
 
 public class myArrangement implements arrangement {
     
@@ -30,7 +30,7 @@ public class myArrangement implements arrangement {
         loadFile = name + ".txt";
         this.picFile = picFile;
         ASCIIOutputFile out = new ASCIIOutputFile(loadFile);
-        myItem filler = new myItem("replace", "replace this for you first item", 1, "filler", 1, "rose.png");
+        myItem filler = new myItem("replace", "replace this for you first backend.item", 1, "filler", 1, "rose.png");
         addItem(filler, 1);
         saveArrangementItemList(out);
         itemHead = null;
@@ -114,7 +114,7 @@ public class myArrangement implements arrangement {
             itemTail = newNode;
         }
         
-        // Set current to the newly added item
+        // Set current to the newly added backend.item
         current = newNode;
     }
     
@@ -122,7 +122,7 @@ public class myArrangement implements arrangement {
     public void removeItem(String search) {
         itemNode p = itemHead;
         
-        // Find the item to remove
+        // Find the backend.item to remove
         while (p != null) {
             if (p.c.getName().equalsIgnoreCase(search)) {
                 // Adjust links to remove this node

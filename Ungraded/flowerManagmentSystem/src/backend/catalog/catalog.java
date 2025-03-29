@@ -1,6 +1,4 @@
-package catalog;
-
-import BasicIO.ASCIIOutputFile;
+package backend.catalog;
 
 public interface catalog<T> {
     

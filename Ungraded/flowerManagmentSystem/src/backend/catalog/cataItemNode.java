@@ -1,6 +1,6 @@
-package catalog;
+package backend.catalog;
 
-import item.*;
+import backend.item.*;
 
 public class cataItemNode {
     myItem c;

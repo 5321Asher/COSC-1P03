@@ -1,7 +1,7 @@
-package arrangement;
+package backend.arrangement;
 
 import BasicIO.ASCIIOutputFile;
-import item.*;
+import backend.item.*;
 
 public interface arrangement {
     
