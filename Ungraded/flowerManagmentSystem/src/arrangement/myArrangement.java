@@ -15,16 +15,6 @@ public class myArrangement implements arrangement {
     String loadFile;
     String picFile;
     
-    public myArrangement(String createName, double createPrice) {
-        name = createName;
-        price = createPrice;
-        loadFile = name + ".txt";
-        ASCIIOutputFile out = new ASCIIOutputFile(loadFile);
-        myItem filler = new myItem("replace", "replace this for you first item", 1, "filler", 1, "rose.png");
-        addItem(filler, 1);
-        saveArrangementItemList(out);
-    }
-    
     public myArrangement(ASCIIDataFile from) {
         name = from.readString();
         if (from.successful()) {
@@ -39,6 +29,10 @@ public class myArrangement implements arrangement {
         this.price = price;
         loadFile = name + ".txt";
         this.picFile = picFile;
+        ASCIIOutputFile out = new ASCIIOutputFile(loadFile);
+        myItem filler = new myItem("replace", "replace this for you first item", 1, "filler", 1, "rose.png");
+        addItem(filler, 1);
+        saveArrangementItemList(out);
         itemHead = null;
         itemTail = null;
         current = null;

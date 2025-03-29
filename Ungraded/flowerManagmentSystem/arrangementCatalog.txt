@@ -1,0 +1,4 @@
+Arrangement Catalog	99.9
+Test Arrangement	90.0	Test Arrangement.txt	rose.png
+Asher's Test Arrangement	10.0	Asher's Test Arrangement.txt	clay.png
+test	45.0	test.txt	rose.png

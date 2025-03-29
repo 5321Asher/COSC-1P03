@@ -244,7 +244,9 @@ public class doArrg {
                     break;
                 case 7:
                     r.saveArrangementItemList(out);
-                    form.close();
+                    form.hide();
+                    addForm.hide();
+                    findForm.hide();
                     return;
             }
             displayItems(current, r);
