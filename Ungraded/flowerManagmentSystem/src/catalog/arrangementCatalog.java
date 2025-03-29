@@ -90,6 +90,7 @@ public class arrangementCatalog implements catalog<myArrangement> {
             out.writeLine("");
             p = p.next;
         }
+        out.close();
     }
     
     @Override
@@ -212,7 +213,7 @@ public class arrangementCatalog implements catalog<myArrangement> {
             p = p.next;
         }
         list.waitForUser();
-        list.hide();
+        list.close();
     }
     
     public void createArrangement(String createName, double createPrice, String createPic) {
@@ -227,5 +228,7 @@ public class arrangementCatalog implements catalog<myArrangement> {
         ASCIIOutputFile arrgOut = new ASCIIOutputFile(r.getLoadFile());
         
         arrg.open(arrgIn, r, arrgOut);
+        arrgIn.close();
+        arrgOut.close();
     }
 }

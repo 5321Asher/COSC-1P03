@@ -4,7 +4,7 @@ import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIOutputFile;
 import BasicIO.BasicForm;
 import Media.Picture;
-import minor.myItem;
+import item.myItem;
 
 public class doArrg {
     
@@ -18,13 +18,13 @@ public class doArrg {
         form = new BasicForm("Previous Item", "Next Item", "Add Item", "Delete Item", "Edit Item", "List Items", "Find Item", "Exit");
         
         
-        form.addTextField("name", "Name   ", 20);
+        form.addTextField("name", "Name   ",40);
         form.addTextField("price", "Price    ", 10);
-        form.addTextField("desc", "Description      ", 20);
+        form.addTextField("desc", "Description      ", 40);
         form.addTextField("qty", "Quantity    ", 10);
         form.addTextField("inv", "Inventory    ", 10);
         form.addTextField("type", "Type    ", 20);
-        form.addCanvas("pic", 300, 300, 350, 0);
+        form.addCanvas("pic", 300, 300, 500, 0);
         
         form.setEditable("name", false);
         form.setEditable("price", false);
@@ -39,9 +39,9 @@ public class doArrg {
         
         addForm.setTitle("Add Item");
         
-        addForm.addTextField("name", "Name   ", 20);
+        addForm.addTextField("name", "Name   ", 40);
         addForm.addTextField("price", "Price    ", 10);
-        addForm.addTextField("desc", "Description      ", 20);
+        addForm.addTextField("desc", "Description      ", 40);
         addForm.addTextField("qty", "Quantity    ", 10);
         addForm.addTextField("inv", "Inventory    ", 10);
         addForm.addTextField("type", "Type    ", 20);
@@ -53,7 +53,7 @@ public class doArrg {
         
         findForm.setTitle("Find Item");
         
-        findForm.addTextField("find", "Find   ", 20);
+        findForm.addTextField("find", "Find   ", 40);
     }
     
     public void loadItems(ASCIIDataFile in, myArrangement r) {
@@ -121,6 +121,8 @@ public class doArrg {
     }
     
     public void addForm(myArrangement r) {
+        addForm.clearAll();
+        
         int button = addForm.accept();
         switch (button) {
             case 0:
@@ -139,7 +141,6 @@ public class doArrg {
                 } else {
                     r.addItem(aItem, qty);
                     addForm.hide();
-                    
                 }
             
             case 1:
@@ -152,6 +153,8 @@ public class doArrg {
     }
     
     public void edit(myItem c, myArrangement r) {
+        addForm.clearAll();
+        
         
         addForm.writeString("name", c.getName());
         addForm.writeDouble("price", c.getPrice());

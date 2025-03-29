@@ -1,6 +1,6 @@
 package arrangement;
 
-import minor.myItem;
+import item.myItem;
 
 public class itemNode {
     int qty;

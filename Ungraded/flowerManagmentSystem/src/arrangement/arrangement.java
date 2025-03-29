@@ -1,9 +1,7 @@
 package arrangement;
 
-import BasicIO.ASCIIDataFile;
-import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
-import minor.*;
+import item.*;
 
 public interface arrangement {
     

@@ -1,4 +1,4 @@
-package minor;
+package item;
 
 import BasicIO.ASCIIDataFile;
 

@@ -1,4 +1,4 @@
-package minor;
+package item;
 
 public interface item {
     

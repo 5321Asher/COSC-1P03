@@ -3,8 +3,7 @@ package catalog;
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
-import arrangement.itemNode;
-import minor.*;
+import item.*;
 
 public class itemCatalog implements catalog <myItem>{
     
@@ -95,6 +94,7 @@ public class itemCatalog implements catalog <myItem>{
             out.writeLine("");
             p = p.next;
         }
+        out.close();
     }
     
     @Override
@@ -170,7 +170,7 @@ public class itemCatalog implements catalog <myItem>{
             p = p.next;
         }
         list.waitForUser();
-        list.hide();
+        list.close();
     }
     
     @Override

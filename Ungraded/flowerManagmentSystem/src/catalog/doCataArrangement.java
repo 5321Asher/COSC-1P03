@@ -13,9 +13,9 @@ public class doCataArrangement {
     public void formSetup() {
         form = new BasicForm("Previous Item", "Next Item", "Add Item", "Delete Item", "Edit Item", "List Items", "Find Item", "Open Item List", "Exit");
         
-        form.addTextField("name", "Name   ", 20);
+        form.addTextField("name", "Name   ", 40);
         form.addTextField("price", "Price    ", 10);
-        form.addCanvas("pic", 300, 300, 350, 0);
+        form.addCanvas("pic", 300, 300, 500, 0);
         
         form.setEditable("name", false);
         form.setEditable("price", false);
@@ -26,7 +26,7 @@ public class doCataArrangement {
         
         addForm.setTitle("Add Arrangement");
         
-        addForm.addTextField("name", "Name   ", 20);
+        addForm.addTextField("name", "Name   ", 40);
         addForm.addTextField("price", "Price    ", 10);
         addForm.addTextField("picFile", "Picture Dir      ", 20);
         
@@ -36,7 +36,7 @@ public class doCataArrangement {
         
         findForm.setTitle("Find Item");
         
-        findForm.addTextField("find", "Find   ", 20);
+        findForm.addTextField("find", "Find   ", 40);
         
         //////////////////////////////////////////////////////////////
         
@@ -44,7 +44,7 @@ public class doCataArrangement {
         
         createForm.setTitle("Create Arrangement");
         
-        createForm.addTextField("name", "Name   ", 20);
+        createForm.addTextField("name", "Name   ", 40);
         createForm.addTextField("price", "Price    ", 10);
         createForm.addTextField("picFile", "Picture Dir      ", 20);
     }
@@ -65,6 +65,7 @@ public class doCataArrangement {
     }
     
     public void addForm(arrangementCatalog r) {
+        addForm.clearAll();
         int button = addForm.accept();
         switch (button) {
             case 0:
@@ -85,6 +86,7 @@ public class doCataArrangement {
     }
     
     public void edit(myArrangement c, arrangementCatalog r) {
+        addForm.clearAll();
         addForm.writeString("name", c.getName());
         addForm.writeDouble("price", c.getPrice());
         addForm.writeString("picFile", c.getPicFile());
@@ -176,6 +178,7 @@ public class doCataArrangement {
                     form.close();
                     addForm.close();
                     findForm.close();
+                    createForm.close();
                     return;
             }
             display(current, r);

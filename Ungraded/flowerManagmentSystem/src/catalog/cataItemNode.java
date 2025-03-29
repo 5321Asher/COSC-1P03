@@ -1,6 +1,6 @@
 package catalog;
 
-import minor.*;
+import item.*;
 
 public class cataItemNode {
     myItem c;

@@ -2,7 +2,7 @@ package catalog;
 
 import BasicIO.BasicForm;
 import Media.Picture;
-import minor.myItem;
+import item.myItem;
 
 public class doCataItem {
     BasicForm form;
@@ -12,12 +12,12 @@ public class doCataItem {
     public void formSetup() {
         form = new BasicForm("Previous Item", "Next Item", "Add Item", "Delete Item", "Edit Item", "List Items", "Find Item", "Exit");
         
-        form.addTextField("name", "Name   ", 20);
+        form.addTextField("name", "Name   ", 40);
         form.addTextField("price", "Price    ", 10);
-        form.addTextField("desc", "Description      ", 20);
+        form.addTextField("desc", "Description      ", 40);
         form.addTextField("inv", "Inventory    ", 10);
         form.addTextField("type", "Type    ", 20);
-        form.addCanvas("pic", 300, 300, 350, 0);
+        form.addCanvas("pic", 300, 300, 500, 0);
         
         form.setEditable("name", false);
         form.setEditable("price", false);
@@ -31,9 +31,9 @@ public class doCataItem {
         
         addForm.setTitle("Add Item");
         
-        addForm.addTextField("name", "Name   ", 20);
+        addForm.addTextField("name", "Name   ", 40);
         addForm.addTextField("price", "Price    ", 10);
-        addForm.addTextField("desc", "Description      ", 20);
+        addForm.addTextField("desc", "Description      ", 40);
         addForm.addTextField("inv", "Inventory    ", 10);
         addForm.addTextField("type", "Type    ", 20);
         addForm.addTextField("file", "File Directory   ", 20);
@@ -44,7 +44,7 @@ public class doCataItem {
         
         findForm.setTitle("Find Item");
         
-        findForm.addTextField("find", "Find   ", 20);
+        findForm.addTextField("find", "Find   ", 40);
     }
     
     public void display(myItem c, itemCatalog r) {
@@ -69,6 +69,7 @@ public class doCataItem {
     }
     
     public void addForm(itemCatalog r) {
+        addForm.clearAll();
         int button = addForm.accept();
         switch (button) {
             case 0:
@@ -97,6 +98,7 @@ public class doCataItem {
     }
     
     public void edit(myItem c, itemCatalog r) {
+        addForm.clearAll();
         addForm.writeString("name", c.getName());
         addForm.writeDouble("price", c.getPrice());
         addForm.writeString("desc", c.getDescription());

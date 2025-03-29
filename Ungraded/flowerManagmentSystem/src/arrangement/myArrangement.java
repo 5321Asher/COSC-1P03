@@ -3,7 +3,7 @@ package arrangement;
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
-import minor.myItem;
+import item.myItem;
 
 public class myArrangement implements arrangement {
     
