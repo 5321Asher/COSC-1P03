@@ -1,11 +1,11 @@
-package backend.arrangement;
+package arrangement;
 
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIOutputFile;
 import BasicIO.BasicForm;
 import Media.Picture;
-import backend.catalog.itemCatalog;
-import backend.item.myItem;
+import catalog.itemCatalog;
+import item.myItem;
 
 public class doArrg {
     
@@ -124,7 +124,7 @@ public class doArrg {
     
     public void displayItems(myItem c, myArrangement r) {
         if (c == null) {
-            System.out.println("DEBUG: No valid backend.item to display.");
+            System.out.println("DEBUG: No valid item to display.");
             form.writeString("name", "");
             form.writeString("price", "");
             form.writeString("desc", "");

@@ -1,6 +1,6 @@
-package backend.arrangement;
+package arrangement;
 
-import backend.item.myItem;
+import item.myItem;
 
 public class itemNode {
     int qty;

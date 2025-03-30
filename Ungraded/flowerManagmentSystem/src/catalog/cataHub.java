@@ -1,4 +1,4 @@
-package backend.catalog;
+package catalog;
 
 import BasicIO.BasicForm;
 

@@ -1,10 +1,10 @@
-package backend.catalog;
+package catalog;
 
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
-import backend.arrangement.doArrg;
-import backend.arrangement.myArrangement;
+import arrangement.doArrg;
+import arrangement.myArrangement;
 
 public class arrangementCatalog implements catalog<myArrangement> {
     

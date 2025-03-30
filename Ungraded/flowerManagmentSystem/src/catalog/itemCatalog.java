@@ -1,9 +1,9 @@
-package backend.catalog;
+package catalog;
 
 import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIDisplayer;
 import BasicIO.ASCIIOutputFile;
-import backend.item.*;
+import item.*;
 
 public class itemCatalog implements catalog <myItem>{
     

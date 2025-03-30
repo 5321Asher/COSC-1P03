@@ -1,8 +1,8 @@
-package backend.catalog;
+package catalog;
 
 import BasicIO.BasicForm;
 import Media.Picture;
-import backend.item.myItem;
+import item.myItem;
 
 public class doCataItem {
     BasicForm form;
@@ -67,7 +67,7 @@ public class doCataItem {
     
     public void display(myItem c, itemCatalog r) {
         if (c == null) {
-            System.out.println("DEBUG: No valid backend.item to display.");
+            System.out.println("DEBUG: No valid item to display.");
             form.writeString("name", "");
             form.writeString("price", "");
             form.writeString("desc", "");

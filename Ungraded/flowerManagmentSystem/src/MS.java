@@ -1,4 +1,4 @@
-import backend.catalog.*;
+import catalog.*;
 
 public class MS {
     public static void main(String[] args) {

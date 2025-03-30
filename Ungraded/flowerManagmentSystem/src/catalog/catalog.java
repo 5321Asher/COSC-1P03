@@ -1,4 +1,4 @@
-package backend.catalog;
+package catalog;
 
 public interface catalog<T> {
     
