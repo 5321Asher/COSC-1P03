@@ -17,6 +17,8 @@ public class itemCatalog implements catalog <myItem>{
     String type;
     String name;
     
+    boolean found;
+    
     public itemCatalog(String name, String type) {
         this.name = name;
         this.type = type;
@@ -104,6 +106,8 @@ public class itemCatalog implements catalog <myItem>{
     
     @Override
     public myItem search(String search) {
+        found = false;
+        
         if (itemHead == null) {
             return null;
         }
@@ -111,12 +115,17 @@ public class itemCatalog implements catalog <myItem>{
         cataItemNode p = itemHead;
         do {
             if (p.c.getName().toLowerCase().contains(search.toLowerCase())) {
+                found = true;
                 return p.c;
             }
             p = p.next;
         } while (p != null);
         
         return null;
+    }
+    
+    public boolean isFound() {
+        return found;
     }
     
     @Override
@@ -171,6 +180,17 @@ public class itemCatalog implements catalog <myItem>{
         }
         list.waitForUser();
         list.close();
+    }
+    
+    public String listRef() {
+        cataItemNode p = itemHead;
+        StringBuilder listRef = new StringBuilder();
+        while (p != null) {
+            String ref = p.c.getType() + "    " + p.c.getName() + "     " + p.c.getInv() + "    " + p.c.getPrice() + "\n";
+            listRef.append(ref);
+            p = p.next;
+        }
+        return listRef.toString();
     }
     
     @Override

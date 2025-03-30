@@ -1,3 +1,5 @@
 Item Catalog	Item
 flower	rose	a red flower	14	2.0	rose.png
 pot	clay	a brown pot	10	14.0	clay.png
+tree	bork	its a bork	19	68.0	rose.png
+florr	mulch	floor stuff	45	13.0	clay.png

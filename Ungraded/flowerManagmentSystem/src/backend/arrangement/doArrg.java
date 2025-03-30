@@ -4,6 +4,7 @@ import BasicIO.ASCIIDataFile;
 import BasicIO.ASCIIOutputFile;
 import BasicIO.BasicForm;
 import Media.Picture;
+import backend.catalog.itemCatalog;
 import backend.item.myItem;
 
 public class doArrg {
@@ -12,13 +13,14 @@ public class doArrg {
     BasicForm addForm;
     BasicForm findForm;
     BasicForm customerForm;
+    BasicForm createForm;
     String arrgName;
     double arrgPrice;
     
     public void formSetup() {
         form = new BasicForm("Previous Item", "Next Item", "Add Item", "Delete Item", "Edit Item", "List Items", "Find Item", "Exit");
         
-        form.addTextField("name", "Name   ",40);
+        form.addTextField("name", "Name   ", 40);
         form.addTextField("price", "Price    ", 10);
         form.addTextField("desc", "Description      ", 40);
         form.addTextField("qty", "Quantity    ", 10);
@@ -40,12 +42,23 @@ public class doArrg {
         addForm.setTitle("Add Item");
         
         addForm.addTextField("name", "Name   ", 40);
-        addForm.addTextField("price", "Price    ", 10);
-        addForm.addTextField("desc", "Description      ", 40);
         addForm.addTextField("qty", "Quantity    ", 10);
-        addForm.addTextField("inv", "Inventory    ", 10);
-        addForm.addTextField("type", "Type    ", 20);
-        addForm.addTextField("file", "File Directory   ", 20);
+        addForm.addTextArea("refList", "Item Catalog    ", 3, 30);
+        addForm.setEditable("refList", false);
+        
+        //////////////////////////////////////////////////////////////////////////
+        
+        createForm = new BasicForm("Ok", "Cancel");
+        
+        createForm.setTitle("Create Item");
+        
+        createForm.addTextField("name", "Name   ", 40);
+        createForm.addTextField("price", "Price    ", 10);
+        createForm.addTextField("desc", "Description      ", 40);
+        createForm.addTextField("qty", "Quantity    ", 10);
+        createForm.addTextField("inv", "Inventory    ", 10);
+        createForm.addTextField("type", "Type    ", 20);
+        createForm.addTextField("file", "File Directory   ", 20);
         
         /////////////////////////////////////////////////////////////////////////
         
@@ -59,7 +72,7 @@ public class doArrg {
         
         customerForm = new BasicForm("Previous Item", "Next Item", "List Items", "Find Item", "Ok");
         
-        customerForm.addTextField("name", "Name   ",40);
+        customerForm.addTextField("name", "Name   ", 40);
         customerForm.addTextField("price", "Price    ", 10);
         customerForm.addTextField("desc", "Description      ", 40);
         customerForm.addTextField("qty", "Quantity    ", 10);
@@ -81,30 +94,25 @@ public class doArrg {
         arrgName = in.readString();
         arrgPrice = in.readDouble();
         
+        itemCatalog cata = new itemCatalog("Item Catalog", "Item");
+        cata.listStart();
+        cata.load();
+        
         while (!in.isEOF()) {
-            // Read backend.item details first
-            String type = in.readString();
-            String itemName = in.readString();
-            String itemDesc = in.readString();
+            String name = in.readString();
+            int qty = in.readInt();
             
-            // Read backend.backend.customer.backend.customer.backend.customer.arrangement.backend.customer.backend.customer.arrangement-specific quantity
-            int arrangeQty = in.readInt();
+            aItem = cata.search(name);
             
-            // Read inventory
-            int itemInv = in.readInt();
-            double price = in.readDouble();
-            String file = in.readString();
-            
-            // Create backend.item with basic details
-            aItem = new myItem(itemName, itemDesc, itemInv, type, price, file);
-            
-            if (aItem.getName() == null || aItem.getName().isEmpty()) {
-                continue;
+            if (!cata.isFound()) {
+                System.out.println("no such item in catalog");
+            } else {
+                r.addItem(aItem, qty);
             }
-            
-            // Add backend.item with its specific backend.backend.customer.backend.customer.backend.customer.arrangement.backend.customer.backend.customer.arrangement quantity
-            r.addItem(aItem, arrangeQty);
         }
+        
+        cata.save();
+        
         in.close();
         if (r.itemHead == null) {
             r.current = null;
@@ -152,28 +160,61 @@ public class doArrg {
     
     public void addForm(myArrangement r) {
         addForm.clearAll();
+        createForm.clearAll();
+        
+        itemCatalog cata = new itemCatalog("Item Catalog", "Item");
+        cata.listStart();
+        cata.load();
+        
+        addForm.writeString("refList", cata.listRef());
         
         int button = addForm.accept();
         switch (button) {
             case 0:
-                String type = addForm.readString("type");
                 String name = addForm.readString("name");
-                double price = addForm.readDouble("price");
-                String desc = addForm.readString("desc");
                 int qty = addForm.readInt("qty");
-                int inv = addForm.readInt("inv");
-                String file = addForm.readString("file");
                 
+                myItem aItem = cata.search(name);
                 
-                myItem aItem = new myItem(name, desc, inv, type, price, file);
-                if (aItem.getName() == null || aItem.getName().isEmpty()) {
-                    return;
+                if (!cata.isFound()) {
+                    createForm.writeString("name", name);
+                    createForm.writeInt("qty", qty);
+                    
+                    int createButton = createForm.accept();
+                    switch (createButton) {
+                        case 0:
+                            String desc = createForm.readString("desc");
+                            String type = createForm.readString("type");
+                            String file = createForm.readString("file");
+                            double price = createForm.readDouble("price");
+                            int inv = createForm.readInt("inv");
+                            
+                            myItem create = new myItem(name, desc, inv, type, price, file);
+                            
+                            cata.addObject(create);
+                            
+                            aItem = cata.search(name);
+                            r.addItem(aItem, qty);
+                            cata.save();
+                            createForm.hide();
+                            break;
+                        case 1:
+                            createForm.hide();
+                            cata.save();
+                            return;
+                    }
                 } else {
                     r.addItem(aItem, qty);
+                    cata.save();
+                    createForm.hide();
                     addForm.hide();
                 }
+                createForm.hide();
+                addForm.hide();
+                break;
             
             case 1:
+                cata.save();
                 return;
         }
     }
@@ -184,7 +225,6 @@ public class doArrg {
     
     public void edit(myItem c, myArrangement r) {
         addForm.clearAll();
-        
         
         addForm.writeString("name", c.getName());
         addForm.writeDouble("price", c.getPrice());
@@ -252,7 +292,7 @@ public class doArrg {
                 case 2:
                     r.listItems();
                     break;
-                    
+                
                 case 3:
                     int findButton = findForm.accept();
                     switch (findButton) {
@@ -266,13 +306,14 @@ public class doArrg {
                             break;
                     }
                     break;
-                    
+                
                 case 4:
                     r.saveArrangementItemList(out);
                     form.close();
                     addForm.close();
                     findForm.close();
                     customerForm.close();
+                    createForm.close();
                     return;
             }
             displayItemsCustomer(current, r);
@@ -340,6 +381,7 @@ public class doArrg {
                     addForm.close();
                     findForm.close();
                     customerForm.close();
+                    createForm.close();
                     return;
             }
             displayItems(current, r);

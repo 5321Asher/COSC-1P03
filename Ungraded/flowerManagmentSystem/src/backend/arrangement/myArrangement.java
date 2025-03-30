@@ -62,13 +62,8 @@ public class myArrangement implements arrangement {
         itemNode p = itemHead;
         while (p != null) {
             if (p.qty != 0) {
-                out.writeString(p.c.getType());
                 out.writeString(p.c.getName());
-                out.writeString(p.c.getDescription());
                 out.writeInt(p.qty);
-                out.writeInt(p.c.getInv());
-                out.writeDouble(p.c.getPrice());
-                out.writeString(p.c.getFile());
                 out.writeLine("");
             }
             p = p.next;

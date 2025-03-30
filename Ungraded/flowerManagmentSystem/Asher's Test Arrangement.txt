@@ -1,2 +1,5 @@
 Asher's Test Arrangement	90.0
-filler	replace	replace this for you first backend.item	1	1	1.0	rose.png
+clay	2
+rose	13
+bork	3
+mulch	2
