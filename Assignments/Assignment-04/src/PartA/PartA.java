@@ -3,7 +3,7 @@ package PartA; //defines package
 import Media.*; //imports turtle displayer and turtle
 
 /**
- * this program recursively draws branches which form into a pattern. depending on certain values these patterns can
+ * this program recursively draws branches which form into a pattern. depending on certain variables these patterns can
  * change easily. these variables include the order, length, and rotation values.
  * Asher Virgona
  * 8032492
@@ -13,7 +13,7 @@ public class PartA {
     TurtleDisplayer display = new TurtleDisplayer(pen, 400, 400); //to draw on
     
     /**
-     * execeutes the for loop to indicate the amount of instances and rotation between each instance the patter will
+     * execeutes the for loop to indicate the amount of instances and rotation between each instance the pattern will
      * repeat
      */
     public PartA() {
@@ -27,7 +27,7 @@ public class PartA {
     }
     
     /**
-     * the branch method recursively calls itself to branch off until the order of the original call == 0. the order is
+     * the branch method recursively calls itself to branch off until the order of the original call <= 0. the order is
      * decremented each recursive call, and the length of the branch is split anyway each recursive call.
      * @param order the amount of branches left in the original method call
      * @param len the length of the current branch/ length of next call branch
@@ -38,7 +38,7 @@ public class PartA {
             return;
         }
         
-        //if no branches have taken place yet (speacial case for inner pattern
+        //if no branches have taken place yet (speacial case for inner pattern)
         if (order == 10) {
             //regular outer patter first
             pen.forward(len);

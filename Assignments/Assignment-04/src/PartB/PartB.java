@@ -8,7 +8,7 @@ import BasicIO.ASCIIOutputFile; //for printing solved maze
  * This program takes a data file (maze) solves the maze using case checking and recursive methods, and prints the
  * solved maze at the end. It requires the brock.jar library and a txt file to run. It also creates a file called
  * out.txt on every run, if already in folder, it overwrites.
- * <p>
+ * 
  * Asher Virgona
  * 8032492
  */
@@ -33,7 +33,7 @@ public class PartB {
     }
     
     /**
-     * gets random x and y coordinates for the start position. if the position == # or E, (!=' ') it generates new
+     * gets random x and y coordinates for the start position. if the position == # or E, simply if (!=' ') it generates new
      * position
      */
     private void start() {
@@ -55,7 +55,7 @@ public class PartB {
     private void loadMaze() {
         ASCIIDataFile maze = new ASCIIDataFile("mz2.txt"); //load txt file
         height = maze.readInt(); //first int on txt
-        width = maze.readInt(); //second in seperated by first int with a tab
+        width = maze.readInt(); //second in seperated from first int with a tab
         System.out.println(height + " " + width); //make sure valid array size
         blocked = new char[height][width];
         for (int i = 0; i < height; i++) {
@@ -88,7 +88,7 @@ public class PartB {
             return false;
         }
         
-        //valid position
+        //valid position check
         if (blocked[x][y] == '#' || blocked[x][y] == '.' || blocked[x][y] == '^' || blocked[x][y] == 'v' || blocked[x][y] == '<' || blocked[x][y] == '>' || blocked[x][y] == 'S') {
             return false;
         }
